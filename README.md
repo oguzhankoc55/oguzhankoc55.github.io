@@ -1,1 +1,1 @@
-# Kendi Kişisel Web Sitem
+#
