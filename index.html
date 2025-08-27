@@ -1,168 +1,183 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oğuzhan Koç | Yazılım Mühendisi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <style>
-        /* Genel Ayarlar */
-        * {margin:0; padding:0; box-sizing:border-box; font-family: 'Roboto', sans-serif;}
-        body {background-color:#0f0f0f; color:#fff; scroll-behavior:smooth;}
-        a {text-decoration:none; color:inherit;}
-        h2,h3,h4,h5 {color:#00ffe0;}
-        section {padding:80px 50px;}
-        .container {max-width:1200px; margin:0 auto;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oğuzhan Koç - Portföy</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    /* RESET & BASIC */
+    * {margin:0; padding:0; box-sizing:border-box; font-family:'Roboto', sans-serif;}
+    body {background:#0f0f1a; color:#fff; scroll-behavior:smooth;}
+    a {text-decoration:none; color:inherit;}
+    img {max-width:100%; display:block;}
 
-        /* Sol Menü */
-        nav {position:fixed; top:0; left:0; height:100%; width:220px; background:#111; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:1000;}
-        nav a {display:block; margin:20px 0; color:#00ffe0; transition:0.3s;}
-        nav a:hover {color:#ff00ff;}
-        main {margin-left:220px;}
+    /* NAVBAR */
+    nav {position:fixed; top:0; left:0; width:100%; background:rgba(15,15,26,0.95); display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; z-index:100;}
+    nav .logo {font-weight:700; font-size:1.3rem; color:#00ffd1;}
+    nav ul {display:flex; list-style:none; gap:1.5rem;}
+    nav ul li a {color:#fff; transition:0.3s;}
+    nav ul li a:hover {color:#00ffd1;}
 
-        /* Hero Bölümü */
-        #hero {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:linear-gradient(135deg,#0f0f0f,#111111); position:relative; overflow:hidden;}
-        #hero h1 {font-size:3rem; animation:fadeInDown 1.5s;}
-        #hero p {margin-top:20px; font-size:1.2rem; color:#aaa; animation:fadeInUp 2s;}
-        @keyframes fadeInDown {from{opacity:0; transform:translateY(-50px);} to{opacity:1; transform:translateY(0);}}
-        @keyframes fadeInUp {from{opacity:0; transform:translateY(50px);} to{opacity:1; transform:translateY(0);}}
+    /* HERO */
+    .hero {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:linear-gradient(135deg, #1a1a2e, #0f0f1a); position:relative; overflow:hidden;}
+    .hero h1 {font-size:3rem; color:#00ffd1; margin-bottom:1rem;}
+    .hero p {font-size:1.2rem; margin-bottom:2rem;}
+    .hero a.btn {padding:0.8rem 2rem; background:#00ffd1; color:#0f0f1a; font-weight:700; border-radius:25px; transition:0.3s;}
+    .hero a.btn:hover {background:#fff;}
 
-        /* Kart Stili */
-        .card-container {display:flex; flex-wrap:wrap; gap:20px; justify-content:center;}
-        .card {background:#1a1a1a; border-radius:15px; padding:20px; width:300px; transition:0.3s; box-shadow:0 0 20px rgba(0,255,224,0.2);}
-        .card:hover {transform:translateY(-10px); box-shadow:0 10px 30px rgba(0,255,224,0.5);}
-        .card h5 {color:#00ffe0; margin-bottom:10px;}
-        .card span {color:#aaa; font-size:0.9rem;}
+    /* ANIMATED BACKGROUND */
+    .hero::before {content:""; position:absolute; width:200%; height:200%; top:-50%; left:-50%; background:radial-gradient(circle, #00ffd1, transparent 70%); animation:move 20s linear infinite; z-index:0; opacity:0.3;}
+    @keyframes move {0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);}}
 
-        /* Yetenekler */
-        .skills {display:flex; flex-wrap:wrap; gap:20px; justify-content:center;}
-        .skill {width:60px; height:60px; display:flex; justify-content:center; align-items:center; border-radius:50%; background:#111; transition:0.3s; cursor:pointer;}
-        .skill img {width:40px; height:40px;}
-        .skill:hover {background:#00ffe0; transform:scale(1.2);}
+    /* SECTION TITLES */
+    section {padding:6rem 2rem;}
+    section h2 {text-align:center; margin-bottom:3rem; color:#00ffd1; font-size:2rem;}
 
-        /* İletişim */
-        .contact-form {display:flex; flex-direction:column; gap:15px;}
-        .contact-form input, .contact-form textarea {padding:10px; border-radius:8px; border:none; outline:none;}
-        .contact-form button {padding:10px; border:none; border-radius:8px; background:#00ffe0; color:#000; font-weight:bold; cursor:pointer; transition:0.3s;}
-        .contact-form button:hover {background:#ff00ff; color:#fff;}
-        
-        /* Responsive */
-        @media(max-width:768px){main{margin-left:0;} nav{width:100%; height:auto; flex-direction:row; justify-content:space-around; padding:10px 0;} section{padding:60px 20px;}}
-    </style>
+    /* CARDS */
+    .cards {display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem;}
+    .card {background:#1a1a2e; border-radius:15px; padding:1.5rem; transition:0.3s; box-shadow:0 0 20px rgba(0,255,209,0.2);}
+    .card:hover {transform:translateY(-10px); box-shadow:0 0 30px rgba(0,255,209,0.5);}
+    .card h3 {margin-bottom:1rem; color:#fff;}
+    .card p {font-size:0.95rem; color:#ccc;}
+    .card span {display:block; margin-top:1rem; font-size:0.85rem; color:#00ffd1;}
+
+    /* SKILLS */
+    .skills {display:flex; flex-wrap:wrap; justify-content:center; gap:1rem;}
+    .skills img {width:50px; height:50px; filter:grayscale(100%); transition:0.3s;}
+    .skills img:hover {filter:grayscale(0%) scale(1.2);}
+
+    /* CONTACT */
+    .contact-form {max-width:500px; margin:auto; display:flex; flex-direction:column; gap:1rem;}
+    .contact-form input, .contact-form textarea {padding:0.8rem; border-radius:10px; border:none; outline:none;}
+    .contact-form button {padding:0.8rem; background:#00ffd1; color:#0f0f1a; font-weight:700; border-radius:25px; border:none; cursor:pointer; transition:0.3s;}
+    .contact-form button:hover {background:#fff; color:#0f0f1a;}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){ nav ul {display:none;} }
+</style>
 </head>
 <body>
 
-    <!-- Sol Menü -->
-    <nav>
-        <a href="#hero"><i class="fas fa-home"></i> Ana Sayfa</a>
-        <a href="#projects"><i class="fas fa-rocket"></i> Projelerim</a>
-        <a href="#experience"><i class="fas fa-briefcase"></i> İş Deneyimi</a>
-        <a href="#skills"><i class="fas fa-tools"></i> Yeteneklerim</a>
-        <a href="#contact"><i class="fas fa-envelope"></i> İletişim</a>
-    </nav>
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">Oğuzhan Koç</div>
+    <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#projects">Projelerim</a></li>
+        <li><a href="#experience">Deneyim</a></li>
+        <li><a href="#skills">Yetenekler</a></li>
+        <li><a href="#contact">İletişim</a></li>
+    </ul>
+</nav>
 
-    <main>
-        <!-- Hero -->
-        <section id="hero">
-            <h1>👋 Merhaba, Ben Oğuzhan Koç</h1>
-            <p>Software Developer | C#, Python | ML & AI Enthusiast</p>
-        </section>
+<!-- HERO -->
+<section class="hero" id="hero">
+    <h1>👋 Merhaba, Ben Oğuzhan</h1>
+    <p>Software Developer | C# & Python | Machine Learning Enthusiast</p>
+    <a href="cv/OğuzhanKoçCV.pdf" class="btn" download>CV İndir</a>
+</section>
 
-        <!-- Projeler -->
-        <section id="projects">
-            <div class="container">
-                <h2 class="text-center mb-5">Projelerim</h2>
-                <div class="card-container">
-                    <div class="card">
-                        <h5>Lojman Bilgi Sistemi</h5>
-                        <p>.Net Core 6.0 ile geliştirilmiş web uygulaması, kamu personeli lojman yönetimi.</p>
-                        <span>11/2022 - 03/2023</span>
-                    </div>
-                    <div class="card">
-                        <h5>Mezun Bilgi Sistemi</h5>
-                        <p>.Net Core 3.1 ile geliştirilmiş web uygulaması, mezun öğrenci bilgileri yönetimi.</p>
-                        <span>08/2022 - 11/2022</span>
-                    </div>
-                    <div class="card">
-                        <h5>Kripta Analiz Projesi</h5>
-                        <p>.Net Core 3.1 ile geliştirilmiş web uygulaması, masaüstü uygulamadan web'e adaptasyon.</p>
-                        <span>07/2022 - 08/2022</span>
-                    </div>
-                    <div class="card">
-                        <h5>Pedagojik Formasyon Sistemi</h5>
-                        <p>.Net Core 3.1 ile başvuru yönetimi.</p>
-                        <span>08/2022 - 11/2022</span>
-                    </div>
-                    <div class="card">
-                        <h5>Görüntü İşleme ile Nesne Tespiti</h5>
-                        <p>Node.js ve YOLOv5 ile web tabanlı nesne tespiti.</p>
-                        <span>02/2023 - 05/2023</span>
-                    </div>
-                    <div class="card">
-                        <h5>Web Uygulaması</h5>
-                        <p>Django kullanarak pdf dokümanlarından veri çıkarımı.</p>
-                        <span>09/2021 - 10/2021</span>
-                    </div>
-                    <div class="card">
-                        <h5>Araç Takip Sistemi</h5>
-                        <p>Flask ile web tabanlı araç takip sistemi.</p>
-                        <span>10/2021 - 12/2021</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- PROJECTS -->
+<section id="projects">
+    <h2>Projelerim</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>Lojman Bilgi Sistemi</h3>
+            <p>.Net Core 6.0 ile geliştirilmiş, Kocaeli Üniversitesi lojman yönetim sistemi.</p>
+            <span>11/2022 - 03/2023</span>
+        </div>
+        <div class="card">
+            <h3>Mezun Bilgi Sistemi</h3>
+            <p>.Net Core 3.1 ile geliştirilmiş, Kocaeli Üniversitesi mezun bilgi sistemi. <a href="https://mezun.kocaeli.edu.tr/" target="_blank">Siteye Git</a></p>
+            <span>08/2022 - 11/2022</span>
+        </div>
+        <div class="card">
+            <h3>Kripta Analiz Projesi</h3>
+            <p>.Net Core 3.1 ile web’e çevrilmiş masaüstü uygulama.</p>
+            <span>07/2022 - 08/2022</span>
+        </div>
+        <div class="card">
+            <h3>Pedagojik Formasyon Başvuru Sistemi</h3>
+            <p>.Net Core 3.1 ile hazırlanmış başvuru sitesi.</p>
+            <span>08/2022 - 11/2022</span>
+        </div>
+        <div class="card">
+            <h3>Görüntü İşleme ile Nesne Tespiti</h3>
+            <p>Node.js ve Yolo V5 ile nesne tespiti. <a href="https://github.com/oguzhankoc55/Yapay_Zeka_YoloV5" target="_blank">Repo</a></p>
+            <span>02/2023 - 05/2023</span>
+        </div>
+        <div class="card">
+            <h3>Web Uygulaması</h3>
+            <p>Django ile PDF verisi çıkarma uygulaması. <a href="https://github.com/oguzhankoc55/Web-Application-yazlab_1.3" target="_blank">Repo</a></p>
+            <span>09/2021 - 10/2021</span>
+        </div>
+        <div class="card">
+            <h3>Araç Takip Sistemi</h3>
+            <p>Flask ile araç takip sistemi. <a href="https://github.com/oguzhankoc55/Vehicle-Tracking-System-yazlab_2.1" target="_blank">Repo</a></p>
+            <span>10/2021 - 12/2021</span>
+        </div>
+    </div>
+</section>
 
-        <!-- İş Deneyimi -->
-        <section id="experience">
-            <div class="container">
-                <h2 class="text-center mb-5">İş Deneyimi</h2>
-                <div class="card-container">
-                    <div class="card"><h5>Software Developer</h5><p>BİLTAM / Kocaeli Üniversitesi</p><span>06/2022 - 06/2023</span></div>
-                    <div class="card"><h5>Intern Software Developer</h5><p>KODSİS</p><span>07/2022 - 08/2023</span></div>
-                    <div class="card"><h5>Intern Software Developer</h5><p>Nacsoft</p><span>02/2022 - 05/2023</span></div>
-                    <div class="card"><h5>Software Developer</h5><p>Enformatik / Kocaeli Üniversitesi</p><span>09/2021 - 02/2022</span></div>
-                    <div class="card"><h5>Software Developer</h5><p>Centra</p><span>03/2023 - 09/2023</span></div>
-                    <div class="card"><h5>Software Developer</h5><p>Jeton Dijital</p><span>10/2023 - Halen</span></div>
-                </div>
-            </div>
-        </section>
+<!-- EXPERIENCE -->
+<section id="experience">
+    <h2>İş Deneyimi</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>Software Developer - Bilgisayar Araştırma Ve Uygulama Merkezi / Kocaeli Üniversitesi</h3>
+            <span>06/2022 - 06/2023</span>
+        </div>
+        <div class="card">
+            <h3>Intern Software Developer - KODSİS</h3>
+            <span>07/2022 - 08/2023</span>
+        </div>
+        <div class="card">
+            <h3>Intern Software Developer - Nacsoft</h3>
+            <span>02/2022 - 05/2023</span>
+        </div>
+        <div class="card">
+            <h3>Software Developer - Enformatik / Kocaeli Üniversitesi</h3>
+            <span>09/2021 - 02/2022</span>
+        </div>
+        <div class="card">
+            <h3>Software Developer - Centra</h3>
+            <span>...</span>
+        </div>
+        <div class="card">
+            <h3>Software Developer - Jeton Dijital</h3>
+            <span>...</span>
+        </div>
+    </div>
+</section>
 
-        <!-- Yetenekler -->
-        <section id="skills">
-            <div class="container">
-                <h2 class="text-center mb-5">Yeteneklerim</h2>
-                <div class="skills">
-                    <div class="skill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"/></div>
-                    <div class="skill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg"/></div>
-                    <div class="skill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"/></div>
-                    <div class="skill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg"/></div>
-                    <div class="skill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg"/></div>
-                    <div class="skill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg"/></div>
-                    <div class="skill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg"/></div>
-                    <div class="skill"><img src="https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg"/></div>
-                    <div class="skill"><img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg"/></div>
-                </div>
-            </div>
-        </section>
+<!-- SKILLS -->
+<section id="skills">
+    <h2>Yeteneklerim</h2>
+    <div class="skills">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" title="Python">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" title="C#">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" title="Java">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" title="JavaScript">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" title="HTML5">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" title="CSS3">
+        <img src="https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" title="SQLite">
+        <img src="https://www.vectorlogo.zone/logos/mysql/mysql-icon.svg" title="MySQL">
+        <img src="https://www.vectorlogo.zone/logos/dot-net/dot-net-icon.svg" title=".NET">
+        <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" title="Git">
+    </div>
+</section>
 
-        <!-- İletişim -->
-        <section id="contact">
-            <div class="container">
-                <h2 class="text-center mb-5">İletişim</h2>
-                <div class="card-container">
-                    <div class="card">
-                        <p>Email: <a href="mailto:oguzhankoc9855@hotmail.com">oguzhankoc9855@hotmail.com</a></p>
-                        <p>Telefon: 0542 672 1362</p>
-                        <p>Sosyal: 
-                            <a href="https://www.linkedin.com/in/oguzhan9855/"><i class="fab fa-linkedin"></i></a>
-                            <a href="https://twitter.com/oguzhan9855"><i class="fab fa-twitter"></i></a>
-                            <a href="https://www.instagram.com/kcoguz/"><i class="fab fa-instagram"></i></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+<!-- CONTACT -->
+<section id="contact">
+    <h2>İletişim</h2>
+    <form class="contact-form">
+        <input type="text" placeholder="Adınız">
+        <input type="email" placeholder="E-Mail">
+        <textarea rows="5" placeholder="Mesajınız"></textarea>
+        <button type="submit">Gönder</button>
+    </form>
+</section>
+
 </body>
 </html>
