@@ -3,183 +3,1448 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oğuzhan Koç - Portföy</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<title>Oğuzhan Koç — Backend Developer</title>
+<meta name="description" content="Oğuzhan Koç — .NET, Mikroservis ve Oracle uzmanı Backend Developer. Kurumsal ERP sistemleri, Azure cloud ve yüksek performanslı API geliştirme.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-    /* RESET & BASIC */
-    * {margin:0; padding:0; box-sizing:border-box; font-family:'Roboto', sans-serif;}
-    body {background:#0f0f1a; color:#fff; scroll-behavior:smooth;}
-    a {text-decoration:none; color:inherit;}
-    img {max-width:100%; display:block;}
+/* ===== VARIABLES ===== */
+:root {
+  --bg-primary: #050510;
+  --bg-secondary: #0a0a1f;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-card-hover: rgba(255,255,255,0.06);
+  --accent: #6c63ff;
+  --accent2: #00d4ff;
+  --accent3: #ff6b9d;
+  --text-primary: #f0f0ff;
+  --text-secondary: #8888aa;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(108,99,255,0.4);
+  --glow: 0 0 40px rgba(108,99,255,0.3);
+  --radius: 20px;
+  --radius-sm: 12px;
+  --transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+}
 
-    /* NAVBAR */
-    nav {position:fixed; top:0; left:0; width:100%; background:rgba(15,15,26,0.95); display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; z-index:100;}
-    nav .logo {font-weight:700; font-size:1.3rem; color:#00ffd1;}
-    nav ul {display:flex; list-style:none; gap:1.5rem;}
-    nav ul li a {color:#fff; transition:0.3s;}
-    nav ul li a:hover {color:#00ffd1;}
+/* ===== RESET ===== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
 
-    /* HERO */
-    .hero {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:linear-gradient(135deg, #1a1a2e, #0f0f1a); position:relative; overflow:hidden;}
-    .hero h1 {font-size:3rem; color:#00ffd1; margin-bottom:1rem;}
-    .hero p {font-size:1.2rem; margin-bottom:2rem;}
-    .hero a.btn {padding:0.8rem 2rem; background:#00ffd1; color:#0f0f1a; font-weight:700; border-radius:25px; transition:0.3s;}
-    .hero a.btn:hover {background:#fff;}
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
-    /* ANIMATED BACKGROUND */
-    .hero::before {content:""; position:absolute; width:200%; height:200%; top:-50%; left:-50%; background:radial-gradient(circle, #00ffd1, transparent 70%); animation:move 20s linear infinite; z-index:0; opacity:0.3;}
-    @keyframes move {0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);}}
+/* ===== CANVAS PARTICLES ===== */
+#particles-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
 
-    /* SECTION TITLES */
-    section {padding:6rem 2rem;}
-    section h2 {text-align:center; margin-bottom:3rem; color:#00ffd1; font-size:2rem;}
+/* ===== NOISE OVERLAY ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+}
 
-    /* CARDS */
-    .cards {display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem;}
-    .card {background:#1a1a2e; border-radius:15px; padding:1.5rem; transition:0.3s; box-shadow:0 0 20px rgba(0,255,209,0.2);}
-    .card:hover {transform:translateY(-10px); box-shadow:0 0 30px rgba(0,255,209,0.5);}
-    .card h3 {margin-bottom:1rem; color:#fff;}
-    .card p {font-size:0.95rem; color:#ccc;}
-    .card span {display:block; margin-top:1rem; font-size:0.85rem; color:#00ffd1;}
+/* ===== NAVBAR ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 0 2.5rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition);
+}
+nav.scrolled {
+  background: rgba(5,5,16,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-logo span { color: var(--text-primary); -webkit-text-fill-color: var(--text-primary); }
+.nav-links {
+  display: flex;
+  gap: 0.3rem;
+}
+.nav-links a {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: 8px;
+  transition: var(--transition);
+  position: relative;
+}
+.nav-links a:hover {
+  color: var(--text-primary);
+  background: rgba(108,99,255,0.1);
+}
+.nav-links a.active { color: var(--accent); }
+.nav-cta {
+  padding: 0.55rem 1.3rem !important;
+  background: linear-gradient(135deg, var(--accent), var(--accent2)) !important;
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+  border-radius: 50px !important;
+  font-weight: 600 !important;
+  font-size: 0.88rem !important;
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(108,99,255,0.4); background: none; }
 
-    /* SKILLS */
-    .skills {display:flex; flex-wrap:wrap; justify-content:center; gap:1rem;}
-    .skills img {width:50px; height:50px; filter:grayscale(100%); transition:0.3s;}
-    .skills img:hover {filter:grayscale(0%) scale(1.2);}
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1001;
+}
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* CONTACT */
-    .contact-form {max-width:500px; margin:auto; display:flex; flex-direction:column; gap:1rem;}
-    .contact-form input, .contact-form textarea {padding:0.8rem; border-radius:10px; border:none; outline:none;}
-    .contact-form button {padding:0.8rem; background:#00ffd1; color:#0f0f1a; font-weight:700; border-radius:25px; border:none; cursor:pointer; transition:0.3s;}
-    .contact-form button:hover {background:#fff; color:#0f0f1a;}
+/* Mobile Nav */
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  background: rgba(5,5,16,0.97);
+  backdrop-filter: blur(20px);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.mobile-nav.open { opacity: 1; pointer-events: all; }
+.mobile-nav a {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+.mobile-nav a:hover { color: var(--accent); }
 
-    /* RESPONSIVE */
-    @media(max-width:768px){ nav ul {display:none;} }
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* Gradient orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(108,99,255,0.18) 0%, transparent 70%);
+  top: -150px; left: -150px;
+  animation-delay: 0s;
+}
+.orb-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%);
+  bottom: -100px; right: -100px;
+  animation-delay: -3s;
+}
+.orb-3 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(255,107,157,0.1) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  animation-delay: -5s;
+}
+@keyframes orbFloat {
+  0%,100% { transform: translate(0,0); }
+  33% { transform: translate(30px,-20px); }
+  66% { transform: translate(-20px,30px); }
+}
+
+.hero-inner {
+  max-width: 900px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.2rem;
+  background: rgba(108,99,255,0.1);
+  border: 1px solid rgba(108,99,255,0.3);
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--accent2);
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+  animation: fadeInDown 0.8s ease both;
+}
+.hero-badge::before {
+  content: '';
+  width: 7px; height: 7px;
+  background: #00ff88;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00ff88;
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.8s 0.2s ease both;
+}
+.hero h1 .name-gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  min-height: 2em;
+  animation: fadeInUp 0.8s 0.35s ease both;
+}
+.hero-subtitle .typed-text {
+  color: var(--accent2);
+  font-weight: 600;
+}
+.cursor-blink {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--accent2);
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: blink 0.8s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+  animation: fadeInUp 0.8s 0.5s ease both;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 50px;
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(108,99,255,0.45); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  background: transparent;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 50px;
+  border: 1px solid var(--border-hover);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background: rgba(108,99,255,0.1);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* Hero Stats */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s 0.65s ease both;
+}
+.stat {
+  text-align: center;
+}
+.stat-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeIn 1s 1s ease both;
+  cursor: pointer;
+}
+.scroll-indicator span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.scroll-mouse {
+  width: 24px;
+  height: 38px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+.scroll-dot {
+  width: 4px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: scrollDown 2s ease infinite;
+}
+@keyframes scrollDown { 0%{transform:translateY(0);opacity:1;} 100%{transform:translateY(12px);opacity:0;} }
+
+/* ===== SECTION BASE ===== */
+section { padding: 7rem 2rem; position: relative; z-index: 2; }
+.container { max-width: 1100px; margin: 0 auto; }
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.section-tag {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  background: rgba(108,99,255,0.1);
+  border: 1px solid rgba(108,99,255,0.25);
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.section-title span {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.section-desc { color: var(--text-secondary); max-width: 520px; margin: 0 auto; font-size: 1rem; }
+
+/* ===== EXPERIENCE SECTION ===== */
+#experience { background: var(--bg-secondary); }
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--accent2), transparent);
+  opacity: 0.3;
+}
+.timeline-item {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.6s ease;
+}
+.timeline-item.visible { opacity: 1; transform: translateX(0); }
+.timeline-dot {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 0 20px rgba(108,99,255,0.4);
+  position: relative;
+  z-index: 1;
+}
+.timeline-content {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+.timeline-content:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  box-shadow: var(--glow);
+  transform: translateX(5px);
+}
+.timeline-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  color: var(--text-primary);
+}
+.timeline-company {
+  font-size: 0.88rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.timeline-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background: rgba(108,99,255,0.08);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  border: 1px solid rgba(108,99,255,0.15);
+}
+
+/* ===== PROJECTS SECTION ===== */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.5rem;
+}
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.project-card.visible { opacity: 1; transform: translateY(0); }
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(108,99,255,0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.project-card:hover::before { opacity: 1; }
+.project-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-6px);
+  box-shadow: var(--glow);
+}
+.project-icon {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 8px 20px rgba(108,99,255,0.35);
+}
+.project-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+.project-desc { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.2rem; line-height: 1.6; }
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+.tag {
+  padding: 0.2rem 0.65rem;
+  background: rgba(108,99,255,0.1);
+  border: 1px solid rgba(108,99,255,0.2);
+  border-radius: 50px;
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--accent2);
+}
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--accent);
+  transition: var(--transition);
+}
+.project-link:hover { gap: 0.7rem; color: var(--accent2); }
+.project-date {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.04);
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+}
+
+/* ===== SKILLS SECTION ===== */
+#skills { background: var(--bg-secondary); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1.2rem;
+}
+.skill-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  transition: var(--transition);
+  cursor: default;
+  opacity: 0;
+  transform: scale(0.9);
+}
+.skill-item.visible { opacity: 1; transform: scale(1); }
+.skill-item:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: var(--glow);
+}
+.skill-item img {
+  width: 44px; height: 44px;
+  margin: 0 auto 0.8rem;
+  transition: filter 0.3s;
+}
+.skill-item:hover img { filter: drop-shadow(0 0 8px var(--accent)); }
+.skill-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+.skill-item:hover .skill-name { color: var(--text-primary); }
+
+/* Categories */
+.skills-categories {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+.cat-btn {
+  padding: 0.45rem 1.1rem;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.83rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Inter', sans-serif;
+}
+.cat-btn:hover, .cat-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(108,99,255,0.08);
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+  align-items: start;
+}
+.contact-info h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.contact-info p { color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; }
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+.contact-link:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  transform: translateX(5px);
+}
+.contact-link-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.contact-link-icon.github { background: rgba(255,255,255,0.06); color: var(--text-primary); }
+.contact-link-icon.linkedin { background: rgba(0,119,181,0.15); color: #0077b5; }
+.contact-link-icon.email { background: rgba(108,99,255,0.12); color: var(--accent); }
+
+.contact-link-text small { display: block; font-size: 0.72rem; color: var(--text-secondary); margin-bottom: 0.1rem; }
+.contact-link-text span { font-size: 0.88rem; font-weight: 600; }
+
+/* Contact Form */
+.contact-form {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+}
+.form-group {
+  margin-bottom: 1.2rem;
+}
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  outline: none;
+  resize: none;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--accent);
+  background: rgba(108,99,255,0.05);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+}
+.form-group textarea { height: 120px; }
+.form-submit {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.3px;
+}
+.form-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(108,99,255,0.4); }
+.form-submit:active { transform: scale(0.98); }
+
+/* Form success */
+.form-success {
+  text-align: center;
+  padding: 2rem;
+  display: none;
+}
+.form-success i { font-size: 3rem; color: #00d4ff; margin-bottom: 1rem; }
+.form-success p { color: var(--text-secondary); }
+
+/* ===== FOOTER ===== */
+footer {
+  position: relative;
+  z-index: 2;
+  padding: 2.5rem 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.footer-text { font-size: 0.82rem; color: var(--text-secondary); }
+.footer-socials { display: flex; gap: 0.8rem; }
+.footer-socials a {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+.footer-socials a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(108,99,255,0.08);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInDown { from{opacity:0;transform:translateY(-20px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+/* ===== TIMELINE DESC & TAGS ===== */
+.timeline-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.6rem;
+  line-height: 1.6;
+}
+.timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+.tl-tag {
+  padding: 0.18rem 0.6rem;
+  background: rgba(0,212,255,0.08);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent2);
+  letter-spacing: 0.3px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .hero h1 { font-size: 2.2rem; }
+  .hero-stats { gap: 2rem; }
+  .contact-wrapper { grid-template-columns: 1fr; }
+  .timeline::before { left: 14px; }
+  .timeline-dot { width: 30px; height: 30px; font-size: 0.8rem; }
+  .timeline-item { gap: 1rem; }
+  .footer-inner { justify-content: center; text-align: center; }
+}
+@media (max-width: 480px) {
+  section { padding: 5rem 1.2rem; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: repeat(3, 1fr); }
+}
 </style>
 </head>
 <body>
 
+<!-- PARTICLES -->
+<canvas id="particles-canvas"></canvas>
+
 <!-- NAVBAR -->
-<nav>
-    <div class="logo">Oğuzhan Koç</div>
-    <ul>
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#experience">Deneyim</a></li>
-        <li><a href="#projects">Projelerim</a></li>
-        <li><a href="#skills">Yetenekler</a></li>
-        <li><a href="#contact">İletişim</a></li>
-    </ul>
+<nav id="navbar">
+  <div class="nav-logo">OK<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#hero" id="nav-home">Ana Sayfa</a></li>
+    <li><a href="#experience" id="nav-exp">Deneyim</a></li>
+    <li><a href="#projects" id="nav-proj">Projeler</a></li>
+    <li><a href="#skills" id="nav-skills">Yetenekler</a></li>
+    <li><a href="cv/OğuzhanKoçCv.pdf" download class="nav-cta" id="nav-cv"><i class="fas fa-download"></i> CV İndir</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#hero" class="mobile-link">Ana Sayfa</a>
+  <a href="#experience" class="mobile-link">Deneyim</a>
+  <a href="#projects" class="mobile-link">Projeler</a>
+  <a href="#skills" class="mobile-link">Yetenekler</a>
+  <a href="#contact" class="mobile-link">İletişim</a>
+  <a href="cv/OğuzhanKoçCv.pdf" download class="mobile-link">CV İndir</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="hero">
-    <h1>👋 Merhaba, Ben Oğuzhan</h1>
-    <p>Software Developer | C# & Python | Machine Learning Enthusiast</p>
-    <a href="cv/OğuzhanKoçCV.pdf" class="btn" download>CV İndir</a>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge">
+      Merhaba, ben buradayım — Türkiye
+    </div>
+    <h1>
+      Ben <span class="name-gradient">Oğuzhan Koç</span>,<br>
+      Backend Developer
+    </h1>
+    <p class="hero-subtitle">
+      Uzmanlaştığım alanlar: <span class="typed-text" id="typed"></span><span class="cursor-blink"></span>
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">
+        <i class="fas fa-rocket"></i> Projelerimi Gör
+      </a>
+      <a href="#contact" class="btn-secondary">
+        <i class="fas fa-paper-plane"></i> İletişime Geç
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Yıl Deneyim</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">7</div>
+        <div class="stat-label">Şirket</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Proje</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">
+    <span>Keşfet</span>
+    <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+  </div>
 </section>
-
-<!-- PROJECTS -->
-
 
 <!-- EXPERIENCE -->
 <section id="experience">
-    <h2>İş Deneyimi</h2>
-    <div class="cards">
-        <div class="card">
-            <h3>Software Developer - Centra</h3>
-            <span>01/2024 - 05/2025</span>
-        </div>
-        <div class="card">
-            <h3>Software Developer - Jeton Dijital</h3>
-            <span>09/2023 - 12/2023</span>
-        </div>
-        <div class="card">
-            <h3>Software Developer - Bilgisayar Araştırma Ve Uygulama Merkezi / Kocaeli Üniversitesi</h3>
-            <span>06/2022 - 06/2023</span>
-        </div>
-        <div class="card">
-            <h3>Intern Software Developer - KODSİS</h3>
-            <span>07/2022 - 08/2023</span>
-        </div>
-        <div class="card">
-            <h3>Intern Software Developer - Nacsoft</h3>
-            <span>02/2022 - 05/2023</span>
-        </div>
-        <div class="card">
-            <h3>Software Developer - Enformatik / Kocaeli Üniversitesi</h3>
-            <span>09/2021 - 02/2022</span>
-        </div>
-        
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Kariyer</div>
+      <h2 class="section-title">İş <span>Deneyimi</span></h2>
+      <p class="section-desc">Çeşitli sektörlerde yazılım geliştirme alanında edindiğim profesyonel deneyimler.</p>
     </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot">🔷</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Backend Developer</div>
+          <div class="timeline-company">Vizyoneks Bilgi Teknolojileri</div>
+          <div class="timeline-date"><i class="fas fa-calendar-alt"></i> Haz 2026 — Devam Ediyor</div>
+          <p class="timeline-desc">Oracle DB ve PL/SQL ile veri yoğun projelerde yüksek performanslı backend mimarileri geliştirme. Azure cloud entegrasyonu ve TFS/Jira ile Agile/Scrum sprint süreçleri.</p>
+          <div class="timeline-tags"><span class="tl-tag">.NET</span><span class="tl-tag">Oracle DB</span><span class="tl-tag">PL/SQL</span><span class="tl-tag">Azure</span><span class="tl-tag">TFS</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">🏗️</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Backend Developer</div>
+          <div class="timeline-company">ASB Yazılım</div>
+          <div class="timeline-date"><i class="fas fa-calendar-alt"></i> Kas 2025 — May 2026</div>
+          <p class="timeline-desc">ERP sistemlerinin .NET ve mikroservis mimarisiyle geliştirilmesi. MSSQL şema tasarımı, EF Core optimizasyonu ve Angular frontend ekipleriyle RESTful API entegrasyonları.</p>
+          <div class="timeline-tags"><span class="tl-tag">.NET</span><span class="tl-tag">Microservices</span><span class="tl-tag">MSSQL</span><span class="tl-tag">EF Core</span><span class="tl-tag">Angular</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">💼</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Backend Developer</div>
+          <div class="timeline-company">Centra Bilişim Teknolojileri</div>
+          <div class="timeline-date"><i class="fas fa-calendar-alt"></i> Oca 2024 — Haz 2025</div>
+          <p class="timeline-desc">İlaç ve gıda endüstrilerine yönelik Konektom ERP ve EAM modülleri. Detaylı RDBMS modellemeleri ve Azure ile dağıtım süreçlerinin iyileştirilmesi.</p>
+          <div class="timeline-tags"><span class="tl-tag">.NET</span><span class="tl-tag">MSSQL</span><span class="tl-tag">Azure</span><span class="tl-tag">ERP</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">💳</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Software Developer</div>
+          <div class="timeline-company">Jeton Digital</div>
+          <div class="timeline-date"><i class="fas fa-calendar-alt"></i> Eyl 2023 — Ara 2023</div>
+          <p class="timeline-desc">Python ve Django ile hızlı ve güvenilir web uygulamaları geliştirme. MySQL veritabanı optimizasyonu.</p>
+          <div class="timeline-tags"><span class="tl-tag">Python</span><span class="tl-tag">Django</span><span class="tl-tag">MySQL</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">🎓</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Software Developer</div>
+          <div class="timeline-company">Kocaeli Üniversitesi</div>
+          <div class="timeline-date"><i class="fas fa-calendar-alt"></i> Haz 2022 — Haz 2023</div>
+          <p class="timeline-desc">Mezun ve Lojman Bilgi Sistemleri gibi dijitalleşme projelerinin .NET Core 3.1 / MVC mimarisiyle uçtan uca geliştirilmesi.</p>
+          <div class="timeline-tags"><span class="tl-tag">.NET Core 3.1</span><span class="tl-tag">MVC</span><span class="tl-tag">MSSQL</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">⚡</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Intern Software Developer</div>
+          <div class="timeline-company">Nacsoft</div>
+          <div class="timeline-date"><i class="fas fa-calendar-alt"></i> Şub 2022 — May 2022</div>
+          <p class="timeline-desc">.NET tabanlı ERP sistemlerinin modül bazlı geliştirme süreçlerine katılım. EF Code-First ve Database-First veri modelleme.</p>
+          <div class="timeline-tags"><span class="tl-tag">.NET</span><span class="tl-tag">EF Core</span><span class="tl-tag">ERP</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- PROJECTS -->
 <section id="projects">
-    <h2>Projelerim</h2>
-    <div class="cards">
-        <div class="card">
-            <h3>Lojman Bilgi Sistemi</h3>
-            <p>.Net Core 6.0 ile geliştirilmiş, Kocaeli Üniversitesi lojman yönetim sistemi.</p>
-            <span>11/2022 - 03/2023</span>
-        </div>
-        <div class="card">
-            <h3>Mezun Bilgi Sistemi</h3>
-            <p>.Net Core 3.1 ile geliştirilmiş, Kocaeli Üniversitesi mezun bilgi sistemi. <a href="https://mezun.kocaeli.edu.tr/" target="_blank">Siteye Git</a></p>
-            <span>08/2022 - 11/2022</span>
-        </div>
-        <div class="card">
-            <h3>Kripta Analiz Projesi</h3>
-            <p>.Net Core 3.1 ile web’e çevrilmiş masaüstü uygulama.</p>
-            <span>07/2022 - 08/2022</span>
-        </div>
-        <div class="card">
-            <h3>Pedagojik Formasyon Başvuru Sistemi</h3>
-            <p>.Net Core 3.1 ile hazırlanmış başvuru sitesi.</p>
-            <span>08/2022 - 11/2022</span>
-        </div>
-        <div class="card">
-            <h3>Görüntü İşleme ile Nesne Tespiti</h3>
-            <p>Node.js ve Yolo V5 ile nesne tespiti. <a href="https://github.com/oguzhankoc55/Yapay_Zeka_YoloV5" target="_blank">Repo</a></p>
-            <span>02/2023 - 05/2023</span>
-        </div>
-        <div class="card">
-            <h3>Web Uygulaması</h3>
-            <p>Django ile PDF verisi çıkarma uygulaması. <a href="https://github.com/oguzhankoc55/Web-Application-yazlab_1.3" target="_blank">Repo</a></p>
-            <span>09/2021 - 10/2021</span>
-        </div>
-        <div class="card">
-            <h3>Araç Takip Sistemi</h3>
-            <p>Flask ile araç takip sistemi. <a href="https://github.com/oguzhankoc55/Vehicle-Tracking-System-yazlab_2.1" target="_blank">Repo</a></p>
-            <span>10/2021 - 12/2021</span>
-        </div>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Portföy</div>
+      <h2 class="section-title">Öne Çıkan <span>Projelerim</span></h2>
+      <p class="section-desc">Geliştirdiğim yazılım projeleri — kurumsal sistemlerden yapay zeka uygulamalarına.</p>
     </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-date">GitHub Repository</div>
+        <div class="project-icon">📦</div>
+        <div class="project-title">Stok Yönetimi (Design Patterns)</div>
+        <p class="project-desc">Yazılım tasarım desenleri (Design Patterns) kullanılarak geliştirilmiş, ölçeklenebilir ve sürdürülebilir stok yönetimi mimarisi.</p>
+        <div class="project-tags">
+          <span class="tag">.NET</span>
+          <span class="tag">C#</span>
+          <span class="tag">Design Patterns</span>
+        </div>
+        <a href="https://github.com/oguzhankoc55/StockManager.DesignPatterns" target="_blank" class="project-link">GitHub Repo <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="project-card">
+        <div class="project-date">GitHub Repository</div>
+        <div class="project-icon">🤝</div>
+        <div class="project-title">Mini CRM</div>
+        <p class="project-desc">Müşteri ilişkileri yönetimi için geliştirilmiş temel CRM fonksiyonlarını barındıran hafif web uygulaması.</p>
+        <div class="project-tags">
+          <span class="tag">.NET</span>
+          <span class="tag">C#</span>
+          <span class="tag">Web</span>
+        </div>
+        <a href="https://github.com/oguzhankoc55/mini-crm" target="_blank" class="project-link">GitHub Repo <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="project-card">
+        <div class="project-date">08/2022 — 11/2022</div>
+        <div class="project-icon">🎓</div>
+        <div class="project-title">Mezun Bilgi Sistemi</div>
+        <p class="project-desc">Kocaeli Üniversitesi mezunlarının bilgilerini yöneten kapsamlı web platformu. Dr. Suhap Şahin ve Dr. Hikmet Can Özcan danışmanlığında geliştirildi.</p>
+        <div class="project-tags">
+          <span class="tag">.NET Core 3.1</span>
+          <span class="tag">C#</span>
+          <span class="tag">MVC</span>
+          <span class="tag">MSSQL</span>
+        </div>
+        <a href="https://mezun.kocaeli.edu.tr/" target="_blank" class="project-link">Siteye Git <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="project-card">
+        <div class="project-date">11/2022 — 03/2023</div>
+        <div class="project-icon">🏠</div>
+        <div class="project-title">Lojman Bilgi Sistemi</div>
+        <p class="project-desc">Akademik personelin lojman yerleştirme işlemlerini yönetmek için geliştirilen .NET tabanlı kurumsal uygulama.</p>
+        <div class="project-tags">
+          <span class="tag">.NET Core 3.1</span>
+          <span class="tag">C#</span>
+          <span class="tag">MSSQL</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-date">02/2023 — 05/2023</div>
+        <div class="project-icon">🤖</div>
+        <div class="project-title">Görüntü İşleme — Nesne Tespiti</div>
+        <p class="project-desc">Node.js ve YOLOv5 ile gerçek zamanlı nesne algılama uygulaması. Derin öğrenme tabanlı yapay zeka projesi.</p>
+        <div class="project-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">YOLOv5</span>
+          <span class="tag">Python</span>
+          <span class="tag">AI/CV</span>
+        </div>
+        <a href="https://github.com/oguzhankoc55/Yapay_Zeka_YoloV5" target="_blank" class="project-link">GitHub Repo <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="project-card">
+        <div class="project-date">09/2021 — 12/2021</div>
+        <div class="project-icon">🚗</div>
+        <div class="project-title">Araç Takip Sistemi</div>
+        <p class="project-desc">Flask framework ile geliştirilmiş gerçek zamanlı araç takip ve yönetim platformu.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Flask</span>
+          <span class="tag">GPS</span>
+        </div>
+        <a href="https://github.com/oguzhankoc55/Vehicle-Tracking-System-yazlab_2.1" target="_blank" class="project-link">GitHub Repo <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="project-card">
+        <div class="project-date">09/2021 — 10/2021</div>
+        <div class="project-icon">📄</div>
+        <div class="project-title">PDF Veri Çıkarma Uygulaması</div>
+        <p class="project-desc">Django ile geliştirilmiş, PDF dokümanlarından otomatik veri çıkarma ve işleme platformu.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Django</span>
+          <span class="tag">PDF</span>
+        </div>
+        <a href="https://github.com/oguzhankoc55/Web-Application-yazlab_1.3" target="_blank" class="project-link">GitHub Repo <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
 </section>
+
 <!-- SKILLS -->
 <section id="skills">
-    <h2>Yeteneklerim</h2>
-    <div class="skills">
-        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" title="Python">
-        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" title="C#">
-        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" title="Java">
-        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" title="JavaScript">
-        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" title="HTML5">
-        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" title="CSS3">
-        <img src="https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" title="SQLite">
-        <img src="https://www.vectorlogo.zone/logos/mysql/mysql-icon.svg" title="MySQL">
-        <img src="https://www.vectorlogo.zone/logos/dot-net/dot-net-icon.svg" title=".NET">
-        <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" title="Git">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Teknolojiler</div>
+      <h2 class="section-title">Yeteneklerim ve <span>Araçlarım</span></h2>
+      <p class="section-desc">Projelerimde aktif olarak kullandığım teknolojiler ve geliştirme araçları.</p>
     </div>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="C#">
+        <div class="skill-name">C#</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg" alt=".NET">
+        <div class="skill-name">.NET Core</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python">
+        <div class="skill-name">Python</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript">
+        <div class="skill-name">JavaScript</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java">
+        <div class="skill-name">Java</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/angular/angular-original.svg" alt="Angular">
+        <div class="skill-name">Angular</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="MSSQL" style="filter:invert(0.7)">
+        <div class="skill-name">MSSQL</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/oracle/oracle-original.svg" alt="Oracle DB">
+        <div class="skill-name">Oracle DB</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://www.vectorlogo.zone/logos/mysql/mysql-icon.svg" alt="MySQL">
+        <div class="skill-name">MySQL</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/azuredevops/azuredevops-original.svg" alt="Azure">
+        <div class="skill-name">Azure</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/django/django-plain.svg" alt="Django" style="filter:invert(0.7)">
+        <div class="skill-name">Django</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flask/flask-original.svg" alt="Flask" style="filter:invert(0.8)">
+        <div class="skill-name">Flask</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git">
+        <div class="skill-name">Git</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jira/jira-original.svg" alt="Jira">
+        <div class="skill-name">Jira</div>
+      </div>
+      <div class="skill-item">
+        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+        <div class="skill-name">PostgreSQL</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
-    <h2>İletişim</h2>
-    <form class="contact-form">
-        <input type="text" placeholder="Adınız">
-        <input type="email" placeholder="E-Mail">
-        <textarea rows="5" placeholder="Mesajınız"></textarea>
-        <button type="submit">Gönder</button>
-    </form>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">İletişim</div>
+      <h2 class="section-title">Birlikte <span>Çalışalım</span></h2>
+      <p class="section-desc">Yeni projeler, iş fırsatları veya sadece merhaba demek için ulaşabilirsiniz.</p>
+    </div>
+    <div class="contact-wrapper">
+      <div class="contact-info">
+        <h3>Selamlaşmak ister misiniz? 👋</h3>
+        <p>Her türlü proje, iş birliği veya fırsatlar için mesaj bırakabilirsiniz. En kısa sürede dönüş yapacağım.</p>
+        <div class="contact-links">
+          <a href="https://github.com/oguzhankoc55" target="_blank" class="contact-link">
+            <div class="contact-link-icon github"><i class="fab fa-github"></i></div>
+            <div class="contact-link-text">
+              <small>GitHub</small>
+              <span>github.com/oguzhankoc55</span>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/oguzhan9855" target="_blank" class="contact-link">
+            <div class="contact-link-icon linkedin"><i class="fab fa-linkedin-in"></i></div>
+            <div class="contact-link-text">
+              <small>LinkedIn</small>
+              <span>linkedin.com/in/oguzhankoc</span>
+            </div>
+          </a>
+          <a href="mailto:oguzhankoc55@gmail.com" class="contact-link">
+            <div class="contact-link-icon email"><i class="fas fa-envelope"></i></div>
+            <div class="contact-link-text">
+              <small>E-posta</small>
+              <span>oguzhankoc55@gmail.com</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form" id="contactFormWrapper">
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="form-name">İsim</label>
+            <input type="text" id="form-name" placeholder="Adınız Soyadınız" required>
+          </div>
+          <div class="form-group">
+            <label for="form-email">E-posta</label>
+            <input type="email" id="form-email" placeholder="ornek@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="form-message">Mesaj</label>
+            <textarea id="form-message" placeholder="Projeniz ya da teklifiniz hakkında bilgi verin..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            <i class="fas fa-paper-plane"></i> Mesaj Gönder
+          </button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <i class="fas fa-check-circle"></i>
+          <h3>Mesajınız Alındı!</h3>
+          <p>En kısa sürede size dönüş yapacağım.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Oğuzhan Koç</div>
+    <p class="footer-text">© 2025 Oğuzhan Koç — Tüm hakları saklıdır.</p>
+    <div class="footer-socials">
+      <a href="https://github.com/oguzhankoc55" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://linkedin.com/in/oguzhankoc" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="mailto:oguzhankoc55@gmail.com" aria-label="E-posta"><i class="fas fa-envelope"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== PARTICLES =====
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  const NUM = 70;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function Particle() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.r = Math.random() * 1.5 + 0.3;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.4;
+    this.alpha = Math.random() * 0.5 + 0.1;
+    this.color = Math.random() > 0.5 ? '108,99,255' : '0,212,255';
+  }
+
+  for (let i = 0; i < NUM; i++) particles.push(new Particle());
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+      ctx.fill();
+    });
+    // Lines between close particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(108,99,255,${0.08 * (1 - dist/120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ===== NAVBAR SCROLL =====
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ===== HAMBURGER MENU =====
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  });
+});
+
+// ===== TYPING EFFECT =====
+const phrases = ['C# & .NET', 'Python & Django', 'Machine Learning', 'Node.js & Flask', 'SQL & Veritabanı'];
+let pi = 0, ci = 0, deleting = false;
+const typedEl = document.getElementById('typed');
+function type() {
+  const current = phrases[pi];
+  if (!deleting) {
+    typedEl.textContent = current.slice(0, ++ci);
+    if (ci === current.length) { deleting = true; setTimeout(type, 1800); return; }
+  } else {
+    typedEl.textContent = current.slice(0, --ci);
+    if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+  }
+  setTimeout(type, deleting ? 50 : 80);
+}
+type();
+
+// ===== SCROLL ANIMATIONS (IntersectionObserver) =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.timeline-item, .project-card, .skill-item').forEach(el => observer.observe(el));
+
+// ===== ACTIVE NAV LINKS =====
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+
+// ===== CONTACT FORM =====
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const name = document.getElementById('form-name').value;
+  const message = document.getElementById('form-message').value;
+  
+  const subject = encodeURIComponent('Portföy İletişim Formu: ' + name);
+  const body = encodeURIComponent(message + '\n\n---\nGönderen: ' + name);
+  
+  // Mail istemcisini aç
+  window.location.href = `mailto:oguzhankoc55@gmail.com?subject=${subject}&body=${body}`;
+  
+  // Form alanlarını temizle
+  this.reset();
+  
+  // Başarı mesajını göster
+  this.style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+  
+  // 5 saniye sonra formu geri getir
+  setTimeout(() => {
+    document.getElementById('formSuccess').style.display = 'none';
+    this.style.display = 'block';
+  }, 5000);
+});
+
+// ===== STAGGERED SKILLS ANIMATION =====
+document.querySelectorAll('.skill-item').forEach((item, i) => {
+  item.style.transitionDelay = `${i * 40}ms`;
+});
+document.querySelectorAll('.project-card').forEach((card, i) => {
+  card.style.transitionDelay = `${i * 80}ms`;
+});
+</script>
 </body>
 </html>
